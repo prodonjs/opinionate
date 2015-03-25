@@ -1,0 +1,24 @@
+<loading-indicator loading="loading" label="loadingLabel"></loading-indicator>
+<alert ng-repeat="a in alerts" alert-type="{{ a.alertType}}" message="{{ a.message }}" close="closeAlert($index)"></alert>
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <form ng-submit="submit()" enctype="multipart/form-data">
+      <div class="form-group">
+        <label>Enter a topic (500 characters or less)</label>
+        <textarea class="form-control" ng-model="topic.name" required rows="5"
+                  ng-max-length="500" placeholder="Enter a topic (500 characters or less)">
+        </textarea>
+      </div>
+      <div class="form-group">
+        <label>Tags (comma separated)</label>
+        <input type="text" class="form-control" ng-model="topic.tags" placeholder="Tags (comma separated)">
+      </div>
+      <div class="form-group">
+        <button type="button" class="btn btn-default btn-file">
+          <input type="file" onchange="angular.element(this).scope().uploadImage(this.files)">Upload Image
+        </button>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<loading-indicator loading="loading" label="loadingLabel"></loading-indicator>
+<alert ng-repeat="a in alerts" alert-type="{{ a.alertType}}" message="{{ a.message }}" close="closeAlert($index)"></alert>
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <div class="list-group">
+      <div ng-repeat="t in topics" class="list-group-item">
+        <h4 class="list-group-item-heading">{{ t.name.substr(0, 25) }}</h4>
+        <p class="list-group-item-text">
+          {{ t.name }}
+        </p>
+        <img ng-if="t.image" ng-src="{{ t.image }}" alt="topic image" style="max-width: 100%">
+        <div class="row">
+          <div class="col-xs-6">
+            <label class="control-label">{{ t.up_votes | number }}</label>
+            <button ng-click="vote($index, 'up')" type="button" class="btn btn-default song-vote" aria-label="Thumbs Up">
+              <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+            </button>
+          </div>
+          <div class="col-xs-6">
+            <label class="control-label">{{ t.down_votes | number }}</label>
+            <button ng-click="vote($index, 'down')" type="button" class="btn btn-default song-vote" aria-label="Thumbs Down">
+              <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

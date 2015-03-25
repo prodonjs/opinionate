@@ -1,0 +1,13 @@
+<loading-indicator loading="loading" label="loadingLabel"></loading-indicator>
+<alert ng-repeat="a in alerts" alert-type="{{ a.alertType}}" message="{{ a.message }}" close="closeAlert($index)"></alert>
+<div class="row">
+  <div class="col-xs-12 col-md-6">
+    <form enctype="multipart/form-data">
+      <img ng-if="profile.avatar" ng-src="{{ profile.avatar }}" alt="avatar">
+      <label ng-if="!profile.avatar">No avatar provided yet!</label>
+      <button type="button" class="btn btn-primary btn-file">
+        <input type="file" onchange="angular.element(this).scope().uploadAvatar(this.files)">Upload Avatar
+      </button>
+    </form>
+  </div>
+</div>
