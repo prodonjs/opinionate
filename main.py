@@ -154,7 +154,7 @@ class TopicsHandler(BaseHandler):
 
     def put(self, id, vote):
         user = users.get_current_user()
-        topic = ndb.Key('Topic', id).get()
+        topic = ndb.Key('Topic', int(id)).get()
         if not topic or not user:
             self.abort(403)
 
