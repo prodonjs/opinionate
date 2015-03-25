@@ -2,7 +2,7 @@
 /**
  * Declare our main AngularJS application module with its dependencies
  */
-var opinionate = angular.module('opinionate', ['ngRoute', 'ngTouch']);
+var opinionate = angular.module('opinionate', ['ngRoute']);
 
 /**
  * Configure our application's routes. This is similar to configuring webapp2
