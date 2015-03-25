@@ -14,7 +14,7 @@ opinionate.config(function($routeProvider) {
     'controller': 'TopicsController',
     'templateUrl': '/templates/topics.html'
   })
-  $routeProvider.when('/new', {
+  when('/new', {
     'controller': 'NewTopicController',
     'templateUrl': '/templates/new_topic.html'
   })
