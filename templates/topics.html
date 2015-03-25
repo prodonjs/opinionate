@@ -4,23 +4,30 @@
   <div class="col-xs-12 col-md-6">
     <div class="list-group">
       <div ng-repeat="t in topics" class="list-group-item">
-        <h4 class="list-group-item-heading">{{ t.name.substr(0, 25) }}</h4>
+        <h4 class="list-group-item-heading">
+          {{ t.name.substr(0, 25) }}<span ng-if="t.name.length > 25">...</span>
+          <span ng-if="myTopics[t.id]" class="label label-success">My Topic</span>
+          <span ng-if="myVotes[t.id]" class="label label-primary">Already Voted {{ myVotes[t.id] }}</span>
+        </h4>
         <p class="list-group-item-text">
-          {{ t.name }}
+          {{ t.name }}<br>
+          <span ng-repeat="tag in t.tags" class="label label-info" style="margin-right: 1px">{{ tag }}</span>
+          <img ng-if="t.image" ng-src="{{ t.image }}" class="img-rounded" alt="topic image" style="max-width: 100%; display: block; clear:both; margin-top: 5px">
         </p>
-        <img ng-if="t.image" ng-src="{{ t.image }}" alt="topic image" style="max-width: 100%">
-        <div class="row">
+        <div class="row" style="margin-top: 5px">
           <div class="col-xs-6">
             <label class="control-label">{{ t.up_votes | number }}</label>
-            <button ng-click="vote($index, 'up')" type="button" class="btn btn-default song-vote" aria-label="Thumbs Up">
+            <button ng-disabled="ineligibleForVote(t.id)" ng-click="vote($index, 'up')" type="button" class="btn btn-default song-vote" aria-label="Thumbs Up">
               <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
             </button>
           </div>
           <div class="col-xs-6">
-            <label class="control-label">{{ t.down_votes | number }}</label>
-            <button ng-click="vote($index, 'down')" type="button" class="btn btn-default song-vote" aria-label="Thumbs Down">
-              <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-            </button>
+            <div class="pull-right">
+              <label class="control-label">{{ t.down_votes | number }}</label>
+              <button ng-disabled="ineligibleForVote(t.id)" ng-click="vote($index, 'down')" type="button" class="btn btn-default song-vote" aria-label="Thumbs Down">
+                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

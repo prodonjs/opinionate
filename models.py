@@ -58,11 +58,11 @@ class Topic(TimestampedModel):
     down_votes = ndb.IntegerProperty(required=True, default=0)
 
 
-class Vote(TimestampedModel):
+class Vote(ndb.Model):
 
     """User's vote on a particular Topic."""
     topic = ndb.KeyProperty(Topic, required=True)
-    vote = ndb.IntegerProperty(required=True, choices=(-1, 1))
+    vote = ndb.StringProperty(required=True, choices=('up', 'down'))
 
 
 class Profile(TimestampedModel):

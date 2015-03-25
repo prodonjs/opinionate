@@ -272,6 +272,22 @@ opinionate.controller('TopicsController', function($scope, $http) {
   $scope.topics = [];
 
   /**
+   * Scope-level map of Topics the user created
+   */
+  $scope.myTopics = {};
+
+
+  /**
+   * Scope-level map of Votes from the user
+   */
+  $scope.myVotes = {};
+
+  /**
+   * Scope-level boolean for indicating whether voting is enabled
+   */
+  $scope.canVote = false;
+
+  /**
    * List of objects for reflecting application alerts.
    */
   $scope.alerts = [];
@@ -289,8 +305,11 @@ opinionate.controller('TopicsController', function($scope, $http) {
   $scope.loading = true;
   $scope.loadingLabel = 'Retrieving latest topics...';
   $http.get('/topics')
-    .success(function(topics) {
-      $scope.topics = topics;
+    .success(function(data) {
+      $scope.topics = data.topics;
+      $scope.canVote = data.can_vote;
+      $scope.myTopics = data.my_topics;
+      $scope.myVotes = data.my_votes;
     })
     .error(function(data, status) {
       $scope.alerts.push({
@@ -303,6 +322,16 @@ opinionate.controller('TopicsController', function($scope, $http) {
     });
 
   /**
+   * Returns true if the user is not logged in, created this topics, or
+   * has already voted on this topic
+   */
+  $scope.ineligibleForVote = function(topicId) {
+    return !$scope.canVote ||
+      (topicId in $scope.myTopics) ||
+      (topicId in $scope.myVotes);
+  };
+
+  /**
    * Handle voting for a topic.
    */
   $scope.vote = function(index, vote) {
@@ -310,8 +339,9 @@ opinionate.controller('TopicsController', function($scope, $http) {
     if (topic) {
       var url = '/topics/' + topic.id + '/' + vote;
       $http.put(url)
-        .success(function(topic) {
-          $scope.topics[index] = topic;
+        .success(function(data) {
+          $scope.topics[index] = data.topic;
+          $scope.myVotes = data.my_votes;
         })
         .error(function(data, status) {
           $scope.alerts.push({
